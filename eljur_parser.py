@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -33,8 +34,27 @@ def get_lyceum_class_page(
     # Waiting while page is loading.
     WebDriverWait(driver, 10)
 
-    with open(f"{lyceum_class}.html", "w") as file:
-        file.write(driver.page_source)
+    student_ids = parse_lyceum_class_page(driver.page_source)
+
+    with open(f"{lyceum_class}.txt", "w") as file:
+        for student, student_id in student_ids.items():
+            file.write(student + " " + student_id + "\n")
+
+def parse_lyceum_class_page(page_html: str):
+    """
+    Parsing every student from lyceum class page.
+
+    page_html - string of page html.
+    """
+    soup = BeautifulSoup(page_html, features="html.parser")
+    student_ids = {}
+
+    for element in soup.find_all(
+        "div", class_="cell notcat nobr noselect pointer cell-color-odd"
+    ):
+        student_ids[element.get("title")] = element.get("uid")
+
+    return student_ids
 
 
 def enter_auth_data(driver: webdriver.Chrome) -> None:
