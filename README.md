@@ -1,2 +1,2 @@
 # eljur-parser
-Parser for eljur.ru written using Python.
+Parser for eljur written using Python
