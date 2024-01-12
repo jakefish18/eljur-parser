@@ -17,8 +17,9 @@ class Settings:
 
     # Parsing settings.
     user_agent: str = "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/121.0"
-    ELJUR_URL: str = "https://rbli.eljur.ru"
     lyceum_classes: list = ["11А", "10А", "10Б", "11Б"]
+    STUDENT_DATA_STORE_PATH: str = env("STUDENT_DATA_STORE_PATH")
+    ELJUR_URL: str = "https://rbli.eljur.ru"
 
 
 settings = Settings()
